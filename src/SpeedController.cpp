@@ -7,7 +7,8 @@
 
 SpeedController::SpeedController(GPIO_BCM pin[4]) : m_pin(pin)
 {
-	gpioInitialise();
+	// TODO: wrap this call to ensure it is properly initialized.
+	int init_status = gpioInitialise();
 }
 
 SpeedController::~SpeedController()
@@ -21,6 +22,7 @@ OneShot125::~OneShot125() {}
 
 void OneShot125::calibrate(void)
 {
+	// TODO: check status values for verified send.
 	int on_id = full_on();
 	int status = gpioWaveTxSend(on_id, PI_WAVE_MODE_ONE_SHOT_SYNC);
 	std::this_thread::sleep_for(std::chrono::seconds(3));

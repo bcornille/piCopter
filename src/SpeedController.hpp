@@ -56,8 +56,8 @@ class SpeedController
 
 	private:
 		GPIO_BCM m_pin[4];
-		virtual void full_on(void) = 0;
-		virtual void full_off(void) = 0;
+		virtual int full_on(void) = 0;
+		virtual int full_off(void) = 0;
 }
 
 class OneShot125 : public SpeedController
@@ -68,8 +68,8 @@ class OneShot125 : public SpeedController
 		virtual void calibrate(void);
 
 	private:
-		virtual void full_on(void);
-		virtual void full_off(void);
+		virtual int full_on(void);
+		virtual int full_off(void);
 }
 
 #endif // __Speed_Controller_h__
