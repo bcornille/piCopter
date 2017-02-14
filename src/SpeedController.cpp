@@ -11,8 +11,8 @@ SpeedController::SpeedController(std::array<GPIO_BCM, 4> pins) : m_pins(pins)
 	int init_status = -1;
 	while (gpioInitialise() < 0)
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(1));
 		std::cout << "PiGPIO not yet initialised." << std::endl;
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 }
 
