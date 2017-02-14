@@ -2,10 +2,11 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include <array>
 
 #include "SpeedController.hpp"
 
-SpeedController::SpeedController(GPIO_BCM pin[4]) : m_pin(pin)
+SpeedController::SpeedController(std::array<GPIO_BCM, 4> pins) : m_pins(pins)
 {
 	// TODO: wrap this call to ensure it is properly initialized.
 	int init_status = gpioInitialise();
@@ -13,10 +14,10 @@ SpeedController::SpeedController(GPIO_BCM pin[4]) : m_pin(pin)
 
 SpeedController::~SpeedController()
 {
-	gpioTernimate();
+	gpioTerminate();
 }
 
-OneShot125::OneShot125(GPIO_BCM pin[4]) : SpeedController(pin) {}
+OneShot125::OneShot125(std::array<GPIO_BCM, 4> pins) : SpeedController(pins) {}
 
 OneShot125::~OneShot125() {}
 
@@ -39,38 +40,38 @@ int OneShot125::full_on(void)
 {
 	gpioPulse_t on[2];
 
-	on[0].gpioOn = 1 << m_pin[0];
+	on[0].gpioOn = 1 << m_pins[0];
 	on[0].gpioOff = 0;
 	on[0].usDelay = 250;
 	on[1].gpioOn = 0;
-	on[1].gpioOff = 1 << m_pin[0];
+	on[1].gpioOff = 1 << m_pins[0];
 	on[1].usDelay = 250;
 
 	gpioWaveAddGeneric(1, on);
 
-	on[0].gpioOn = 1 << m_pin[1];
+	on[0].gpioOn = 1 << m_pins[1];
 	on[0].gpioOff = 0;
 	on[0].usDelay = 250;
 	on[1].gpioOn = 0;
-	on[1].gpioOff = 1 << m_pin[1];
+	on[1].gpioOff = 1 << m_pins[1];
 	on[1].usDelay = 250;
 
 	gpioWaveAddGeneric(1, on);
 
-	on[0].gpioOn = 1 << m_pin[2];
+	on[0].gpioOn = 1 << m_pins[2];
 	on[0].gpioOff = 0;
 	on[0].usDelay = 250;
 	on[1].gpioOn = 0;
-	on[1].gpioOff = 1 << m_pin[2];
+	on[1].gpioOff = 1 << m_pins[2];
 	on[1].usDelay = 250;
 
 	gpioWaveAddGeneric(1, on);
 
-	on[0].gpioOn = 1 << m_pin[3];
+	on[0].gpioOn = 1 << m_pins[3];
 	on[0].gpioOff = 0;
 	on[0].usDelay = 250;
 	on[1].gpioOn = 0;
-	on[1].gpioOff = 1 << m_pin[3];
+	on[1].gpioOff = 1 << m_pins[3];
 	on[1].usDelay = 250;
 
 	gpioWaveAddGeneric(1, on);
@@ -82,38 +83,38 @@ int OneShot125::full_off(void)
 {
 	gpioPulse_t on[2];
 
-	on[0].gpioOn = 1 << m_pin[0];
+	on[0].gpioOn = 1 << m_pins[0];
 	on[0].gpioOff = 0;
 	on[0].usDelay = 125;
 	on[1].gpioOn = 0;
-	on[1].gpioOff = 1 << m_pin[0];
+	on[1].gpioOff = 1 << m_pins[0];
 	on[1].usDelay = 375;
 
 	gpioWaveAddGeneric(1, on);
 
-	on[0].gpioOn = 1 << m_pin[1];
+	on[0].gpioOn = 1 << m_pins[1];
 	on[0].gpioOff = 0;
 	on[0].usDelay = 125;
 	on[1].gpioOn = 0;
-	on[1].gpioOff = 1 << m_pin[1];
+	on[1].gpioOff = 1 << m_pins[1];
 	on[1].usDelay = 375;
 
 	gpioWaveAddGeneric(1, on);
 
-	on[0].gpioOn = 1 << m_pin[2];
+	on[0].gpioOn = 1 << m_pins[2];
 	on[0].gpioOff = 0;
 	on[0].usDelay = 125;
 	on[1].gpioOn = 0;
-	on[1].gpioOff = 1 << m_pin[2];
+	on[1].gpioOff = 1 << m_pins[2];
 	on[1].usDelay = 375;
 
 	gpioWaveAddGeneric(1, on);
 
-	on[0].gpioOn = 1 << m_pin[3];
+	on[0].gpioOn = 1 << m_pins[3];
 	on[0].gpioOff = 0;
 	on[0].usDelay = 125;
 	on[1].gpioOn = 0;
-	on[1].gpioOff = 1 << m_pin[3];
+	on[1].gpioOff = 1 << m_pins[3];
 	on[1].usDelay = 375;
 
 	gpioWaveAddGeneric(1, on);
